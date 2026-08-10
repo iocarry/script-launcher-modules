@@ -105,6 +105,26 @@ function buildCoreB_UI(parentPanel, buildSectionHelper, COLORS, mtStatus, memToo
         applyEase("both", val, false); 
     };
 
+    function bindSliderWheel(rowObj, saveKey, applyFn) {
+        var onWheel = function(event) {
+            var step = 1;
+            var delta = event.detail !== undefined ? (event.detail < 0 ? step : -step) : (event.delta > 0 ? step : -step);
+            var currentVal = Math.max(0, Math.min(100, Math.round(rowObj.sld.value + delta)));
+            rowObj.sld.value = currentVal;
+            rowObj.txt.text = currentVal.toString();
+            if (saveKey) saveSet(saveKey, currentVal.toString());
+            if (typeof applyFn === "function") applyFn(false);
+            try { if (typeof event.stopPropagation === "function") event.stopPropagation(); } catch(e){}
+        };
+        try { rowObj.sld.addEventListener("mousewheel", onWheel); } catch(e){}
+        try { rowObj.txt.addEventListener("mousewheel", onWheel); } catch(e){}
+        try { rowObj.grp.addEventListener("mousewheel", onWheel); } catch(e){}
+    }
+
+    bindSliderWheel(rowOut, "MT_EaseOut", function() { applyBothSliders(false); });
+    bindSliderWheel(rowIn, "MT_EaseIn", function() { applyBothSliders(false); });
+    bindSliderWheel(rowBoth, "MT_EaseBoth", function(skipUndo) { applyEase("both", rowBoth.sld.value, skipUndo); });
+
     btnApplySliders.onClick = function() { applyBothSliders(false); };
     
     rowOut.btn.onClick = function() { 
