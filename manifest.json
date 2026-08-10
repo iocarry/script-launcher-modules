@@ -1,0 +1,8 @@
+﻿{
+  "CoreA": { "version": "1.0.0", "url": "https://raw.githubusercontent.com/iocarry/script-launcher-modules/main/MotionTools_CoreA.jsx", "filename": "MotionTools_CoreA.jsx" },
+  "CoreB": { "version": "1.0.0", "url": "https://raw.githubusercontent.com/iocarry/script-launcher-modules/main/MotionTools_CoreB.jsx", "filename": "MotionTools_CoreB.jsx" },
+  "Others": { "version": "1.0.0", "url": "https://raw.githubusercontent.com/iocarry/script-launcher-modules/main/MotionTools_Others.jsx", "filename": "MotionTools_Others.jsx" },
+  "Project": { "version": "1.0.0", "url": "https://raw.githubusercontent.com/iocarry/script-launcher-modules/main/MotionTools_Project.jsx", "filename": "MotionTools_Project.jsx" },
+  "Property": { "version": "1.0.0", "url": "https://raw.githubusercontent.com/iocarry/script-launcher-modules/main/MotionTools_Property.jsx", "filename": "MotionTools_Property.jsx" },
+  "Wiggle": { "version": "1.0.0", "url": "https://raw.githubusercontent.com/iocarry/script-launcher-modules/main/MotionTools_Wiggle.jsx", "filename": "MotionTools_Wiggle.jsx" }
+}
