@@ -105,25 +105,27 @@ function buildCoreB_UI(parentPanel, buildSectionHelper, COLORS, mtStatus, memToo
         applyEase("both", val, false); 
     };
 
-    function bindSliderWheel(rowObj, saveKey, applyFn) {
-        var onWheel = function(event) {
-            var step = 1;
-            var delta = event.detail !== undefined ? (event.detail < 0 ? step : -step) : (event.delta > 0 ? step : -step);
-            var currentVal = Math.max(0, Math.min(100, Math.round(rowObj.sld.value + delta)));
-            rowObj.sld.value = currentVal;
-            rowObj.txt.text = currentVal.toString();
-            if (saveKey) saveSet(saveKey, currentVal.toString());
-            if (typeof applyFn === "function") applyFn(false);
-            try { if (typeof event.stopPropagation === "function") event.stopPropagation(); } catch(e){}
-        };
-        try { rowObj.sld.addEventListener("mousewheel", onWheel); } catch(e){}
-        try { rowObj.txt.addEventListener("mousewheel", onWheel); } catch(e){}
-        try { rowObj.grp.addEventListener("mousewheel", onWheel); } catch(e){}
-    }
+    rowOut.onWheelChange = function(val) {
+        saveSet("MT_EaseOut", val.toString());
+        applyBothSliders(false);
+    };
+    rowIn.onWheelChange = function(val) {
+        saveSet("MT_EaseIn", val.toString());
+        applyBothSliders(false);
+    };
+    rowBoth.onWheelChange = function(val) {
+        saveSet("MT_EaseBoth", val.toString());
+        applyEase("both", val, false);
+    };
 
-    bindSliderWheel(rowOut, "MT_EaseOut", function() { applyBothSliders(false); });
-    bindSliderWheel(rowIn, "MT_EaseIn", function() { applyBothSliders(false); });
-    bindSliderWheel(rowBoth, "MT_EaseBoth", function(skipUndo) { applyEase("both", rowBoth.sld.value, skipUndo); });
+    if (parentPanel) {
+        var rootWin = parentPanel;
+        while (rootWin.parent) rootWin = rootWin.parent;
+        if (!rootWin.easeSliders) rootWin.easeSliders = [];
+        rootWin.easeSliders.push(rowOut);
+        rootWin.easeSliders.push(rowIn);
+        rootWin.easeSliders.push(rowBoth);
+    }
 
     btnApplySliders.onClick = function() { applyBothSliders(false); };
     
